@@ -34,7 +34,7 @@ function Chat() {
 
 
   useEffect(() => {
-    socket.current = io('http://192.168.43.99:8080')
+    socket.current = io(process.env.BACKENDURL || "https://blog-biet-grp10.herokuapp.com")
     socket.current.on('chatFromServer',message => {      
       setState(draft => {
         draft.chatMessages.push(message)
