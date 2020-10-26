@@ -4,7 +4,7 @@ import Page from "./Page.jsx";
 function About(){
 
   useEffect(() => {
-    document.title = "About Us | ComplexApp"
+    document.title = "About Us | BloggerApp"
     window.scrollTo(0,0)
   }, [])
     return (
