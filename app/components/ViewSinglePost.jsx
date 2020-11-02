@@ -79,7 +79,7 @@ function ViewSinglePost(props) {
 
       <p className="text-muted small mb-4">
         <Link to={`/profile/${post.author.username}`}>
-          <img className="avatar-tiny" src="https://gravatar.com/avatar/b9408a09298632b5151200f3449434ef?s=128" />
+          <img className="avatar-tiny" src={appState.user.avatar} />
         </Link>
         Posted by <Link to={`/profile/${post.author.username}`}>{post.isVisitorOwner?'you':post.author.username}</Link> on {dateFormatted}
       </p>
