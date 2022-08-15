@@ -57,6 +57,7 @@ function Chat() {
   function handleSubmit(e) {
     e.preventDefault()
     
+    if(state.fieldValue=="")return ;
     socket.current.emit("chatFromBrowser",{message:state.fieldValue,token:appState.user.token})
     
 
@@ -78,11 +79,6 @@ function Chat() {
       </span>
     </div>
     <div id="chat" className="chat-log" ref={chatLog}>
-      
-      
-      
-      
-      
       {state.chatMessages.map((message,index) => {
         if (message.username == appState.user.username) {
           return (

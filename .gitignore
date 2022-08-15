@@ -28,3 +28,5 @@ _notes
 .vscode
 dwsync.xml
 dist/
+.env
+.txt
