@@ -60,6 +60,10 @@ body {
     color: #292929;
   }
   
+  .body-content img{
+    max-width: 100%;
+  }
+
   .body-content p,
   .body-content ul,
   .body-content ol {
