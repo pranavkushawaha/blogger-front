@@ -65,7 +65,7 @@ function ViewSinglePost(props) {
   return (
     <Page title={post.title}>
       <div className="d-flex justify-content-between">
-        <h2>{post.title}</h2>
+        <h2 className="display-6 font-weight-bold">{post.title}</h2>
         {isOwner() && (
           <span className="pt-2">
             <Link to={`/post/${post._id}/edit`} data-tip='Edit' data-for='edit' className="text-primary mr-2"><i className="fas fa-edit"></i></Link>
