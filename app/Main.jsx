@@ -5,7 +5,7 @@ import {BrowserRouter, Switch, Route} from "react-router-dom";
 import Axios from "axios";
 import {CSSTransition} from 'react-transition-group'
 
-Axios.defaults.baseURL= process.env.BACKENDURL || "https://blog-biet-grp10.herokuapp.com";
+Axios.defaults.baseURL= process.env.BACKENDURL;
 
 // mongoDb mainUser's password: P1BvrYSzWD62FQaP
 import StateContext from './StateContext.jsx'
