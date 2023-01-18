@@ -34,7 +34,9 @@ config = {
     filename: "bundled.js",
   },
   plugins: [
-    new Dotenv(),
+    new Dotenv({
+      systemvars:true
+    }),
     new HtmlWebpackPlugin({
       filename: "index.html",
       template: "app/index-template.html",
