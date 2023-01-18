@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from "react"
 import Page from "./Page.jsx"
-import {useParams, NavLink, Switch, Route} from "react-router-dom"
+import {useParams, NavLink, Routes, Route} from "react-router-dom"
+import withRouter from "../../withRouter.jsx"
 import Axios from "axios"
 import StateContext from "../StateContext.jsx"
 import ProfilePosts from './ProfilePosts.jsx'
@@ -107,30 +108,28 @@ function Profile() {
       </h2>
 {/* // postCount, followerCount, followingCount */}
       <div className="profile-nav nav nav-tabs pt-2 mb-4">
-        <NavLink exact to={`/profile/${state.profileData.profileUsername}`} className="nav-item nav-link">
+        <NavLink end to={`/profile/${state.profileData.profileUsername}`} 
+          className={({ isActive }) => "nav-item nav-link" + (isActive ? " active" : "")}
+        >
           Posts: {state.profileData.counts.postCount}
         </NavLink>
-        <NavLink exact to={`/profile/${state.profileData.profileUsername}/followers`} className="nav-item nav-link">
+        <NavLink end to={`/profile/${state.profileData.profileUsername}/followers`} 
+          className={({ isActive }) => "nav-item nav-link" + (isActive ? " active" : "")}>
           Followers: {state.profileData.counts.followerCount}
         </NavLink>
-        <NavLink to={`/profile/${state.profileData.profileUsername}/following`} className="nav-item nav-link">
+        <NavLink to={`/profile/${state.profileData.profileUsername}/following`} 
+          className={({ isActive }) => "nav-item nav-link" + (isActive ? " active" : "")}>
           Following: {state.profileData.counts.followingCount}
         </NavLink>
       </div>
 
-      <Switch>
-        <Route exact path='/profile/:username'>
-          <ProfilePosts />
-        </Route>
-        <Route exact path='/profile/:username/followers'>
-          <ProfileFollowers />
-        </Route>
-        <Route path='/profile/:username/following'>
-          <ProfileFollowing />
-        </Route>
-      </Switch>
+      <Routes>
+        <Route exact path='' element={<ProfilePosts />}/>
+        <Route exact path='followers' element={<ProfileFollowers />}/>
+        <Route path='following' element={<ProfileFollowing />}/>
+      </Routes>
     </Page>
   )
 }
 
-export default Profile
+export default withRouter(Profile)

@@ -1,11 +1,13 @@
 import React, { useEffect, Suspense} from "react";
-import ReactDOM from "react-dom";
 import {useImmerReducer} from 'use-immer'
-import {BrowserRouter, Switch, Route} from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Axios from "axios";
 import {CSSTransition} from 'react-transition-group'
+import { createRoot } from 'react-dom/client';
 
-Axios.defaults.baseURL= process.env.BACKENDURL;
+
+
+
 
 // mongoDb mainUser's password: P1BvrYSzWD62FQaP
 import StateContext from './StateContext.jsx'
@@ -28,8 +30,7 @@ const Search = React.lazy(() => import('./components/Search.jsx'))
 const Chat = React.lazy(() => import('./components/Chat.jsx'))
 import LoadingDotIcon from './components/LoadingDotIcon.jsx'
 function ExampleComponent(){
-
-    
+    Axios.defaults.baseURL= process.env.BACKENDURL;
     
     const initialState = {
         loggedIn : Boolean(localStorage.getItem('complexappToken')),
@@ -51,7 +52,7 @@ function ExampleComponent(){
                 break
             case "logout":
                 draft.loggedIn = false
-                return //both return and break does the same work..
+                break //both return and break does the same work..
             case "flashMessages":
                 draft.flashMessages.push(action.value)
                 break 
@@ -96,6 +97,8 @@ function ExampleComponent(){
                   dispatch({type:"flashMessages",value:"Your session has expired. Please login again."})
               }
             } catch (e) {
+                console.log(e);
+                // console.log(process.env.BACKENDURL);
               console.log('there was a problem or request was cancelled.');
               
             }
@@ -118,32 +121,16 @@ function ExampleComponent(){
         </CSSTransition>
         <Header />
         <Suspense fallback={<LoadingDotIcon />}>
-        <Switch >
-            <Route path='/post/:id/edit' exact>
-                <EditPost />
-            </Route>
-            <Route path='/profile/:username'>
-                <Profile />
-            </Route>
-            <Route path="/" exact>
-                {state.loggedIn ? <Home /> : <Homeguest />}
-            </Route>
-            <Route path='/post/:id' exact>
-                <ViewSinglePost />
-            </Route>
-            <Route path="/create-post" exact>
-                <CreatePost />
-            </Route>
-            <Route path="/about-us" exact>
-                <About />
-            </Route>
-            <Route path="/terms" exact>
-                <Terms />
-            </Route>
-            <Route>
-                <NotFound />
-            </Route>
-        </Switch>
+        <Routes >
+            <Route path='/post/:id/edit' exact element={<EditPost />}/>
+            <Route path='/profile/:username/*' exact element={<Profile />}/>
+            <Route path="/" exact element={state.loggedIn ? <Home /> : <Homeguest />}/>
+            <Route path='/post/:id' exact element={<ViewSinglePost />}/>
+            <Route path="/create-post" exact element={<CreatePost />}/>
+            <Route path="/about-us" exact element={<About />}/>
+            <Route path="/terms" exact element={<Terms />}/>
+            <Route element={<NotFound />}/>
+        </Routes>
         </Suspense>
         <Suspense fallback=''>{state.loggedIn && <Chat />} </Suspense>
         <Footer />
@@ -151,8 +138,8 @@ function ExampleComponent(){
         </DispatchContext.Provider>
         </StateContext.Provider>)
 }
-ReactDOM.render(<ExampleComponent />,document.getElementById("app"));
+createRoot(document.getElementById("app")).render(<ExampleComponent />);
 
-if (module.hot) {
-    module.hot.accept();
-}
+// if (module.hot) {
+//     module.hot.accept();
+// }
