@@ -44,12 +44,9 @@ function EditPost(props) {
       case 'bodyChange' :
         draft.body.value = action.value
         break
-      case 'submitUpdate':
-        if (!draft.title.hasError && !draft.body.hasError){
-          draft.sendCount++
-          appDispatch({type:'flashMessages' ,value:"Congrats, you successfully updated a post. "})
-        }
-        break
+      // case 'submitUpdate':
+        
+      //   break
       case 'saveRequestStarted':
         draft.isSaving = true
         break
@@ -98,9 +95,13 @@ function EditPost(props) {
     return () => {
       ourRequest.cancel();
     }
-  }, [])
-  useEffect(() => {   
-    if (state.sendCount){
+  },[])
+
+  function handleSubmit(e){
+    e.preventDefault()
+    dispatch({type:'bodyRules', value:state.body.value})
+    dispatch({type:'titleRules', value:state.title.value})
+    if (!state.title.hasError && !state.body.hasError){
       dispatch({type:'saveRequestStarted'})
       async function fetchPost(){
         try {
@@ -109,17 +110,13 @@ function EditPost(props) {
           dispatch({type:'saveRequestFinished'})
         } catch (e) {
           console.log('There was a second problem.'+ e);         
+        } finally{
+          appDispatch({type:'flashMessages' ,value:"Congrats, you successfully updated a post. "})
+          navigate(`/post/${state.id}`);
         }
       }      
-      fetchPost()  
+      fetchPost() 
     }
-  }, [state.sendCount])
-
-  function handleSubmit(e){
-    e.preventDefault()
-    dispatch({type:'bodyRules', value:state.body.value})
-    dispatch({type:'titleRules', value:state.title.value})
-    dispatch({type:'submitUpdate'})
   }
   if (state.notFound){
     return (

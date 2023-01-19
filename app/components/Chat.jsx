@@ -2,7 +2,7 @@ import React, { useEffect,useContext,useRef } from "react"
 import StateContext from '../StateContext.jsx'
 import DispatchContext from '../DispatchContext.jsx'
 import { useImmer } from "use-immer"
-import io from 'socket.io-client'
+import {io} from 'socket.io-client'
 import {Link } from 'react-router-dom'
 
 function Chat() {
@@ -35,7 +35,11 @@ function Chat() {
 
   useEffect(() => {
     socket.current = io(process.env.BACKENDURL)
-    socket.current.on('chatFromServer',message => {      
+    socket.current.on("connect",()=>{
+      // console.log("connected for chat");
+    })
+    socket.current.on('chatFromServer',(message) => {  
+      // console.log(message)    
       setState(draft => {
         draft.chatMessages.push(message)
       })
