@@ -1,4 +1,18 @@
 {
   "tabWidth": 2,
-  "useTabs": true
+  "useTabs": true,
+  "trailingComma": "es5",
+  "singleQuote": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+},
+"[vue]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+},
+"[javascriptreact]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+}
 }

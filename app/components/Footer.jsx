@@ -1,12 +1,17 @@
+import { Box, Divider, Text } from "@chakra-ui/react";
 import React from "react";
 import {Link} from "react-router-dom";
+import { muted } from "../styles.jsx";
 
 function Footer(){
     return (
-    <footer className="border-top text-center small text-muted py-3">
-      <p><Link to="/" className="mx-1">Home</Link> | <Link className="mx-1" to="/about-us">About Us</Link> | <Link className="mx-1" to="/terms">Terms</Link></p>
-      <p className="m-0">Copyright &copy; 2022 <Link to="/" >BloggerApp</Link> | Developed with a lot of effort | All rights reserved.</p>
-    </footer>
+    <Box>
+      <Divider/>
+    <Box textAlign={"center"} my={10} px={4}>
+      <Text sx={muted}><Link to="/" style={{color:"#006fe6"}}>Home</Link> | <Link  to="/about-us" style={{color:"#006fe6"}}>About Us</Link> | <Link  to="/terms" style={{color:"#006fe6"}}>Terms</Link></Text>
+      <Text sx={muted}>Copyright &copy; 2023 <Link to="/" >BloggerApp</Link> | Developed with a lot of effort | All rights reserved.</Text>
+    </Box>
+    </Box>
     );
 }
 export default Footer;

@@ -5,6 +5,22 @@ import StateContext from '../StateContext.jsx'
 import LoadingDotIcon from './LoadingDotIcon.jsx'
 
 
+import {
+	Card,
+	CardBody,
+	Text,
+	Box,
+	List,
+	ListItem,
+	// Link,
+	Divider,
+	Stack,
+	StackDivider,
+	Avatar,
+	HStack,
+} from '@chakra-ui/react';
+
+
 function ProfileFollowing() {
     const [isLoading, setIsloading] = useState(true)
     const [posts,setPosts] = useState([])
@@ -30,15 +46,33 @@ function ProfileFollowing() {
         return <div><LoadingDotIcon /></div>
     }else{
     return (
-        <div className="list-group">
-            {posts.map((item,index) => {
-                return (
-                    <Link key={index} to={`/profile/${item.username}`} className="list-group-item list-group-item-action">
-                        <img className="avatar-tiny" src={item.avatar} /> {item.username}
-                    </Link>
-                )
-            })}
-        </div>
+        <Box>
+				<Stack divider={<StackDivider />}>
+					{posts.map((item, index) => {
+						return (
+							<Link
+								key={index}
+								to={`/profile/${item.username}`}
+							>
+								<Card>
+									<CardBody>
+										<HStack>
+											<Avatar
+												size="md"
+												src={item.avatar}
+												name={item.username}
+											/>
+											<Text fontSize="xl" noOfLines="1">
+												{item.username}
+											</Text>
+										</HStack>
+									</CardBody>
+								</Card>
+							</Link>
+						);
+					})}
+				</Stack>
+			</Box>
     )}
 }
 

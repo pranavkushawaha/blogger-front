@@ -13,16 +13,16 @@ const fse = require("fs-extra")
 */
 class RunAfterCompile {
   apply(compiler) {
-    compiler.hooks.done.tap("Copy files", function () {
-      fse.copySync("./app/main.css", "./dist/main.css")
+    // compiler.hooks.done.tap("Copy files", function () {
+    //   fse.copySync("./app/main.css", "./dist/main.css")
 
-      /*
-        If you needed to copy another file or folder
-        such as your "images" folder, you could just
-        call fse.copySync() as many times as you need
-        to here to cover all of your files/folders.
-      */
-    })
+    //   /*
+    //     If you needed to copy another file or folder
+    //     such as your "images" folder, you could just
+    //     call fse.copySync() as many times as you need
+    //     to here to cover all of your files/folders.
+    //   */
+    // })
   }
 }
 
@@ -57,6 +57,18 @@ config = {
           },
         },
       },
+      {
+        test: /\.(css|sass|scss)$/,
+        use:{
+          loader: 'style-loader!css-loader!sass-loader'
+        }
+      },
+      {
+        test: /\.(ttf|eot|svg|woff|woff2)(\?.+)?$/,
+        use:{
+          loader: 'file-loader?name=[hash:12].[ext]'
+        }
+      }
     ],
   },
 }

@@ -1,157 +1,229 @@
-import React, { useEffect,useContext } from "react"
-import Page from "./Page.jsx"
-import {useImmerReducer} from 'use-immer'
-import {useParams, Link, useNavigate} from 'react-router-dom'
-import Axios from "axios"
-import LoadingDotIcon from './LoadingDotIcon.jsx'
-import StateContext from '../StateContext.jsx'
-import DispatchContext from '../DispatchContext.jsx'
-import NotFound from "./NotFound.jsx"
-import withRouter from "../../withRouter.jsx"
+import React, { useEffect, useContext } from 'react';
+import Page from './Page.jsx';
+import { useImmerReducer } from 'use-immer';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import Axios from 'axios';
+import LoadingDotIcon from './LoadingDotIcon.jsx';
+import StateContext from '../StateContext.jsx';
+import DispatchContext from '../DispatchContext.jsx';
+import NotFound from './NotFound.jsx';
+import withRouter from '../../withRouter.jsx';
+
+import {
+	Box,
+	Button,
+	FormControl,
+	FormErrorIcon,
+	FormErrorMessage,
+	FormLabel,
+	Input,
+	Text,
+	Textarea,
+	Stack,
+	Flex,
+	Spacer,
+} from '@chakra-ui/react';
 
 function EditPost(props) {
-  const appState = useContext(StateContext)
-  const appDispatch = useContext(DispatchContext)
-  const navigate = useNavigate();
-  const initialState = {
-    title:{
-      value:"",
-      hasError:false,
-      message:""
-    },
-    body:{
-      value:"",
-      hasError:false,
-      message:""
-    },
-    isFetching:true,
-    isSaving:false,
-    sendCount:0,
-    id:useParams().id,
-    notFound:false
-  }
-  
-  function ourReducer(draft,action){
-    switch (action.type) {
-      case 'fetchComplete':
-        draft.title.value = action.value.title
-        draft.body.value = action.value.body
-        draft.isFetching = false
-        break;
-      case 'titleChange':
-        draft.title.value = action.value
-        break;
-      case 'bodyChange' :
-        draft.body.value = action.value
-        break
-      // case 'submitUpdate':
-        
-      //   break
-      case 'saveRequestStarted':
-        draft.isSaving = true
-        break
-      case 'saveRequestFinished':
-        draft.isSaving = false
-        break 
-      case 'titleRules':
-        if (!action.value.trim()){
-          draft.title.hasError = true
-          draft.title.message = 'You must provide a title.'
-        }  
-        break
-      case 'bodyRules':
-        if (!action.value.trim()){
-          draft.body.hasError = true
-          draft.body.message = 'You must provide a body content.'
-        }
-        break
-      case 'notFound':
-        draft.notFound = true  
-      default:
-        break;
-    }
-  }
-  const [state, dispatch] =  useImmerReducer(ourReducer,initialState)
-  useEffect(() => {
-    const ourRequest = Axios.CancelToken.source()
-    async function fetchPost(){
-      try {
-        const response = await Axios.get(`/post/${state.id}`,{cancelToken:ourRequest.token})
-        if (response.data) {
-          dispatch({type:"fetchComplete", value:response.data})
-          if (appState.user.username != response.data.author.username) {
-            appDispatch({type: 'flashMessage', value:"You do not have permission to edit that post."})
-            navigate('/')
-          }
-        } else {
-          dispatch({type:'notFound'})
-        }
-      } catch (e) {
-        console.log('There was a problem.');
-        
-      }
-    }
-    fetchPost()
-    return () => {
-      ourRequest.cancel();
-    }
-  },[])
+	const appState = useContext(StateContext);
+	const appDispatch = useContext(DispatchContext);
+	const navigate = useNavigate();
+	const initialState = {
+		title: {
+			value: '',
+			hasError: false,
+			message: '',
+		},
+		body: {
+			value: '',
+			hasError: false,
+			message: '',
+		},
+		isFetching: true,
+		isSaving: false,
+		sendCount: 0,
+		id: useParams().id,
+		notFound: false,
+	};
 
-  function handleSubmit(e){
-    e.preventDefault()
-    dispatch({type:'bodyRules', value:state.body.value})
-    dispatch({type:'titleRules', value:state.title.value})
-    if (!state.title.hasError && !state.body.hasError){
-      dispatch({type:'saveRequestStarted'})
-      async function fetchPost(){
-        try {
-          const response = await Axios.post(`/post/${state.id}/edit`,{title:state.title.value,body:state.body.value,token:appState.user.token})
-          dispatch({type:"fetchComplete", value:response.data})
-          dispatch({type:'saveRequestFinished'})
-        } catch (e) {
-          console.log('There was a second problem.'+ e);         
-        } finally{
-          appDispatch({type:'flashMessages' ,value:"Congrats, you successfully updated a post. "})
-          navigate(`/post/${state.id}`);
-        }
-      }      
-      fetchPost() 
-    }
-  }
-  if (state.notFound){
-    return (
-      <NotFound />
-    )
-  }
-  if (state.isFetching) return <div><LoadingDotIcon /></div>
-  return (
-    
-    <Page title='Edit Post'>
-      <Link className="small font-weight-light" to={`/post/${state.id}`} >&laquo; Back to post permalink</Link>
-      <form onSubmit={handleSubmit} className="mt-3">
-        <div className="form-group">
-          <label htmlFor="post-title" className="text-muted mb-1">
-            <small>Title</small>
-          </label>
-          <input onBlur={(e) => dispatch({type:'titleRules', value:e.target.value})} onChange={(e) => dispatch({type:'titleChange',value:e.target.value})} defaultValue={state.title.value} autoFocus name="title" id="post-title" className="form-control form-control-lg form-control-title" type="text" placeholder="" autoComplete="off" />
-          { state.title.hasError && <div className="alert alert-danger small liveValidateMessage">{state.title.message}</div>}
-        </div>
+	function ourReducer(draft, action) {
+		switch (action.type) {
+			case 'fetchComplete':
+				draft.title.value = action.value.title;
+				draft.body.value = action.value.body;
+				draft.isFetching = false;
+				break;
+			case 'titleChange':
+				draft.title.value = action.value;
+				break;
+			case 'bodyChange':
+				draft.body.value = action.value;
+				break;
+			// case 'submitUpdate':
 
-        <div className="form-group">
-          <label htmlFor="post-body" className="text-muted mb-1 d-block">
-            <small>Body Content</small>
-          </label>
-          <textarea onBlur={(e) => dispatch({type:'bodyRules', value:e.target.value})} onChange={(e) => dispatch({type:'bodyChange',value:e.target.value})} defaultValue={state.body.value} name="body" id="post-body" className="body-content tall-textarea form-control" type="text"></textarea>
-          { state.body.hasError && <div className="alert alert-danger small liveValidateMessage">{state.body.message}</div>}
-        </div>
+			//   break
+			case 'saveRequestStarted':
+				draft.isSaving = true;
+				break;
+			case 'saveRequestFinished':
+				draft.isSaving = false;
+				break;
+			case 'titleRules':
+				if (!action.value.trim()) {
+					draft.title.hasError = true;
+					draft.title.message = 'You must provide a title.';
+				}
+				break;
+			case 'bodyRules':
+				if (!action.value.trim()) {
+					draft.body.hasError = true;
+					draft.body.message = 'You must provide a body content.';
+				}
+				break;
+			case 'notFound':
+				draft.notFound = true;
+			default:
+				break;
+		}
+	}
+	const [state, dispatch] = useImmerReducer(ourReducer, initialState);
+	useEffect(() => {
+		const ourRequest = Axios.CancelToken.source();
+		async function fetchPost() {
+			try {
+				const response = await Axios.get(`/post/${state.id}`, {
+					cancelToken: ourRequest.token,
+				});
+				if (response.data) {
+					dispatch({ type: 'fetchComplete', value: response.data });
+					if (appState.user.username != response.data.author.username) {
+						appDispatch({
+							type: 'flashMessage',
+							value: 'You do not have permission to edit that post.',
+						});
+						navigate('/');
+					}
+				} else {
+					dispatch({ type: 'notFound' });
+				}
+			} catch (e) {
+				console.log('There was a problem.');
+			}
+		}
+		fetchPost();
+		return () => {
+			ourRequest.cancel();
+		};
+	}, []);
 
-        <button className="btn btn-primary" disabled={state.isSaving} >Save Update</button>
-      </form>
-    </Page>
-  )
+	function handleSubmit(e) {
+		e.preventDefault();
+		dispatch({ type: 'bodyRules', value: state.body.value });
+		dispatch({ type: 'titleRules', value: state.title.value });
+		if (!state.title.hasError && !state.body.hasError) {
+			dispatch({ type: 'saveRequestStarted' });
+			async function fetchPost() {
+				try {
+					const response = await Axios.post(`/post/${state.id}/edit`, {
+						title: state.title.value,
+						body: state.body.value,
+						token: appState.user.token,
+					});
+					dispatch({ type: 'fetchComplete', value: response.data });
+					dispatch({ type: 'saveRequestFinished' });
+				} catch (e) {
+					console.log('There was a second problem.' + e);
+				} finally {
+					appDispatch({
+						type: 'flashMessages',
+						value: 'Congrats, you successfully updated a post. ',
+					});
+					navigate(`/post/${state.id}`);
+				}
+			}
+			fetchPost();
+		}
+	}
+	if (state.notFound) {
+		return <NotFound />;
+	}
+	if (state.isFetching)
+		return (
+			<div>
+				<LoadingDotIcon />
+			</div>
+		);
+	return (
+		<Page title="Edit Post">
+			<FormControl isInvalid={state.title.hasError}>
+				<FormLabel>Title</FormLabel>
+				<Input
+					onBlur={(e) =>
+						dispatch({ type: 'titleRules', value: e.target.value })
+					}
+					onChange={(e) =>
+						dispatch({ type: 'titleChange', value: e.target.value })
+					}
+					defaultValue={state.title.value}
+					autoFocus
+					name="title"
+					id="post-title"
+					className="form-control form-control-lg form-control-title"
+					type="text"
+					placeholder=""
+					autoComplete="off"
+					size="lg"
+				/>
+				{state.title.hasError && (
+					<FormErrorMessage>
+						<FormErrorIcon />
+						{state.title.message}
+					</FormErrorMessage>
+				)}
+			</FormControl>
+			<FormControl isInvalid={state.body.hasError}>
+				<FormLabel>Content</FormLabel>
+				<Textarea
+					onBlur={(e) => dispatch({ type: 'bodyRules', value: e.target.value })}
+					onChange={(e) =>
+						dispatch({ type: 'bodyChange', value: e.target.value })
+					}
+					defaultValue={state.body.value}
+					name="body"
+					id="post-body"
+					className="body-content tall-textarea form-control"
+					type="text"
+					h={300}
+				/>
+				{state.body.hasError && (
+					<FormErrorMessage>
+						<FormErrorIcon />
+						{state.body.message}
+					</FormErrorMessage>
+				)}
+			</FormControl>
+			<Stack
+				direction={{ base: 'column', sm: 'row' }}
+				gap={4}
+				py={4}
+				// justifyContent={'s'}
+			>
+				<Button
+					onClick={handleSubmit}
+					disabled={state.isSaving}
+					colorScheme="whatsapp"
+				>
+					Save Update
+				</Button>
+				<Link to={`/post/${state.id}`}>
+					<Button>&laquo; Back to post permalink</Button>
+				</Link>
+			</Stack>
+		</Page>
+	);
 }
 
-export default withRouter(EditPost)
+export default withRouter(EditPost);
 
 // author: {username: "pransd", avatar: "https://gravatar.com/avatar/9dde7873420b45bd2854e36a5e8453fb?s=128"}
 // body: "fjlsakjljflajklsdjaljfalkjaljflajklf"
