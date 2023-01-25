@@ -121,7 +121,17 @@ function Home() {
 												{/* </Flex> */}
 											</CardHeader>
 											<CardBody>
-												<Box noOfLines="3">
+												<Box
+													noOfLines="3"
+													sx={{
+														img: {
+															width: '100%',
+															borderRadius: '16px',
+															marginBottom: '10px',
+															marginTop: '10px',
+														},
+													}}
+												>
 													<ReactMarkdown
 														// components={ChakraUIRenderer()}
 														color="blackAlpha.500"

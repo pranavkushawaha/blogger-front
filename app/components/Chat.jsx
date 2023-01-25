@@ -100,7 +100,7 @@ function Chat() {
 			<ModalOverlay />
 			<ModalContent>				
 				<Center py={4}>
-					<Badge colorScheme='primary'>Your messages here.</Badge>
+					<Badge colorScheme='primary'>Your messages will show up here.</Badge>
 				</Center>
 				<ModalCloseButton/>
 				<Box

@@ -188,6 +188,9 @@ function ViewSinglePost(props) {
 						sx={{
 							img: {
 								width: '100%',
+								borderRadius:"16px",
+								marginBottom:"10px",
+								marginTop:"10px",
 							},
 						}}
 						ref={cancelRef}
