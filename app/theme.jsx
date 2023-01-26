@@ -41,7 +41,7 @@ const theme = extendTheme(
 						padding: '10px',
 						bg: 'gray.50',
 						borderRadius: 'xl',
-						m: '10px',
+						m: '20px',
 						mb: '0px',
 					},
 					footer: {
@@ -82,7 +82,7 @@ const theme = extendTheme(
 		colors: {
 			primary: {
 				main: '#4aa3ff',
-				50: '#dcf3ff',
+				50: '#edf9ff',
 				100: '#aed7ff',
 				200: '#7dbdff',
 				300: '#4aa3ff',

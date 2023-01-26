@@ -15,24 +15,19 @@ function Header(props) {
 	const appState = useContext(StateContext);
 
 	return (
-		<Box bg="white" paddingY="1" paddingX={{base:"5%",sm:"10%"}} marginBottom="5" position={'sticky'} top='0' zIndex={'10'}>
+		<Box bg="white" paddingX={{base:"5%",sm:"10%"}} position={'sticky'} top='0' zIndex={'10'}>
 			<Box
 				display={{ md: 'flex' }}
 				justifyContent="space-between"
 				alignItems={{ sm: 'center', md: 'justify' }}
-				sx={outlineBox}
+				// sx={outlineBox}
 			>
 				<Link to="/">
-					<Text paddingLeft="3" fontSize="2xl" as="b" color="#007bff">
+					<Text paddingLeft="2" fontSize="xl"  color="#007bff">
 						Blogger App
 					</Text>
 				</Link>
-				<Box
-					
-					display={{ md: 'flex' }}
-					alignItems={{ md: 'start' }}
-					gap="3"
-				>
+				<Box>
 					{appState.loggedIn ? <HeaderLoggedIn /> : <HeaderLoggedOut />}
 				</Box>
 			</Box>

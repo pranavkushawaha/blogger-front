@@ -22,6 +22,10 @@ import {
 	Stack,
 	Flex,
 	Spacer,
+	Card,
+	CardBody,
+	CardHeader,
+
 } from '@chakra-ui/react';
 
 function EditPost(props) {
@@ -154,71 +158,82 @@ function EditPost(props) {
 			</div>
 		);
 	return (
-		<Page title="Edit Post">
-			<FormControl isInvalid={state.title.hasError}>
-				<FormLabel>Title</FormLabel>
-				<Input
-					onBlur={(e) =>
-						dispatch({ type: 'titleRules', value: e.target.value })
-					}
-					onChange={(e) =>
-						dispatch({ type: 'titleChange', value: e.target.value })
-					}
-					defaultValue={state.title.value}
-					autoFocus
-					name="title"
-					id="post-title"
-					className="form-control form-control-lg form-control-title"
-					type="text"
-					placeholder=""
-					autoComplete="off"
-					size="lg"
-				/>
-				{state.title.hasError && (
-					<FormErrorMessage>
-						<FormErrorIcon />
-						{state.title.message}
-					</FormErrorMessage>
-				)}
-			</FormControl>
-			<FormControl isInvalid={state.body.hasError}>
-				<FormLabel>Content</FormLabel>
-				<Textarea
-					onBlur={(e) => dispatch({ type: 'bodyRules', value: e.target.value })}
-					onChange={(e) =>
-						dispatch({ type: 'bodyChange', value: e.target.value })
-					}
-					defaultValue={state.body.value}
-					name="body"
-					id="post-body"
-					className="body-content tall-textarea form-control"
-					type="text"
-					h={300}
-				/>
-				{state.body.hasError && (
-					<FormErrorMessage>
-						<FormErrorIcon />
-						{state.body.message}
-					</FormErrorMessage>
-				)}
-			</FormControl>
-			<Stack
-				direction={{ base: 'column', sm: 'row' }}
-				gap={4}
-				py={4}
-				// justifyContent={'s'}
-			>
-				<Button
-					onClick={handleSubmit}
-					disabled={state.isSaving}
-					colorScheme="whatsapp"
-				>
-					Save Update
-				</Button>
-				<Link to={`/post/${state.id}`}>
-					<Button>&laquo; Back to post permalink</Button>
-				</Link>
-			</Stack>
+		<Page title="Edit Post" width="20%">
+			<Card>
+				<CardHeader>
+					<Text as="b" fontSize={'xl'} color={'primary.400'}>
+						Edit Post
+					</Text>
+				</CardHeader>
+				<CardBody>
+					<FormControl isInvalid={state.title.hasError}>
+						<FormLabel>Title</FormLabel>
+						<Input
+							onBlur={(e) =>
+								dispatch({ type: 'titleRules', value: e.target.value })
+							}
+							onChange={(e) =>
+								dispatch({ type: 'titleChange', value: e.target.value })
+							}
+							defaultValue={state.title.value}
+							autoFocus
+							name="title"
+							id="post-title"
+							className="form-control form-control-lg form-control-title"
+							type="text"
+							placeholder=""
+							autoComplete="off"
+							size="lg"
+						/>
+						{state.title.hasError && (
+							<FormErrorMessage>
+								<FormErrorIcon />
+								{state.title.message}
+							</FormErrorMessage>
+						)}
+					</FormControl>
+					<FormControl isInvalid={state.body.hasError}>
+						<FormLabel>Content</FormLabel>
+						<Textarea
+							onBlur={(e) =>
+								dispatch({ type: 'bodyRules', value: e.target.value })
+							}
+							onChange={(e) =>
+								dispatch({ type: 'bodyChange', value: e.target.value })
+							}
+							defaultValue={state.body.value}
+							name="body"
+							id="post-body"
+							className="body-content tall-textarea form-control"
+							type="text"
+							h={300}
+						/>
+						{state.body.hasError && (
+							<FormErrorMessage>
+								<FormErrorIcon />
+								{state.body.message}
+							</FormErrorMessage>
+						)}
+					</FormControl>
+					<Stack
+						direction={{ base: 'column', sm: 'row' }}
+						gap={4}
+						py={4}
+						// justifyContent={'s'}
+					>
+						<Button
+							onClick={handleSubmit}
+							disabled={state.isSaving}
+							colorScheme="whatsapp"
+						>
+							Save Update
+						</Button>
+						<Link to={`/post/${state.id}`}>
+							<Button>&laquo; Back to post permalink</Button>
+						</Link>
+					</Stack>
+				</CardBody>
+			</Card>
 		</Page>
 	);
 }

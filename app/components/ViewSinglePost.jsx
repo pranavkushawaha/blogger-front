@@ -146,7 +146,7 @@ function ViewSinglePost(props) {
 							{post.title}
 						</Text>
 						{isOwner() && (
-							<Stack sx={outlineBox} direction={{ base: 'column', md: 'row' }}>
+							<Stack direction={{ base: 'column', md: 'row' }}>
 								<Link
 									to={`/post/${post._id}/edit`}
 									data-tip="Edit"

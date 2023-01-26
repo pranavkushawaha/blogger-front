@@ -26,12 +26,13 @@ function HeaderLoggedIn(props) {
 	}
 	return (
 		<Flex
-			m="3"
+			p="2"
 			// direction={{ base: 'column', sm: 'row' }}
 			flexWrap={'wrap'}
 			gap="4"
-			alignItems={{ base: 'start', sm: 'center' }}
+			alignItems={'center'}
 			justifyContent="flex-start"
+			// overflow={'hidden'}
 		>
 			<Link to="/">
 				<Box>

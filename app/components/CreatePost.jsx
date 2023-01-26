@@ -12,7 +12,10 @@ import {
 	FormLabel,
 	Textarea,
 	Input,
-	Text
+	Text,
+	Card,
+	CardBody,
+	CardHeader,
 } from '@chakra-ui/react';
 
 function CreatePost(props) {
@@ -41,35 +44,43 @@ function CreatePost(props) {
 	}
 	return (
 		<Page title="Create New Post" width="20%">
-			<Text as="b" color={'primary.500'}>Markdown is Supported</Text>
-			<FormControl>
-				<FormLabel>Title</FormLabel>
-				<Input
-					onChange={(e) => setTitle(e.target.value)}
-					autoFocus
-					name="title"
-					id="post-title"
-					type="text"
-					placeholder=""
-					autoComplete="off"
-					size="lg"
-				/>
-				<FormHelperText>Choose a title of your post</FormHelperText>
-			</FormControl>
-			<FormControl>
-				<FormLabel>Content</FormLabel>
-				<Textarea
-					onChange={(e) => setBody(e.target.value)}
-					name="body"
-					id="post-body"
-					type="text"
-					h={300}
-				/>
-			</FormControl>
+			<Card>
+				<CardHeader>
+				<Text as="b" color={'primary.400'}>
+					Markdown Is Supported
+				</Text>
+				</CardHeader>
+				<CardBody>
+					<FormControl>
+						<FormLabel>Title</FormLabel>
+						<Input
+							onChange={(e) => setTitle(e.target.value)}
+							autoFocus
+							name="title"
+							id="post-title"
+							type="text"
+							placeholder=""
+							autoComplete="off"
+							size="lg"
+						/>
+						<FormHelperText>Choose a title of your post</FormHelperText>
+					</FormControl>
+					<FormControl>
+						<FormLabel>Content</FormLabel>
+						<Textarea
+							onChange={(e) => setBody(e.target.value)}
+							name="body"
+							id="post-body"
+							type="text"
+							h={300}
+						/>
+					</FormControl>
 
-			<Button mt={4} onClick={handleSubmit} colorScheme="whatsapp">
-				Save New Post
-			</Button>
+					<Button mt={4} onClick={handleSubmit} colorScheme="whatsapp">
+						Save New Post
+					</Button>
+				</CardBody>
+			</Card>
 		</Page>
 	);
 }

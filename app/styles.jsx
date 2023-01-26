@@ -21,8 +21,8 @@ export const postHeading = {
 
 export const outlineBox = {
 	// border: '1px',
-	borderRadius: 'xl',
+	borderRadius: 'lg',
 	bg: 'gray.50',
 	borderColor: 'primary.100',
-    p:'1'
+    p:'0'
 };

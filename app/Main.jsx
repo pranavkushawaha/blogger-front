@@ -155,7 +155,7 @@ function ExampleComponent() {
 							<Route path="/create-post" exact element={<CreatePost />} />
 							<Route path="/about-us" exact element={<About />} />
 							<Route path="/terms" exact element={<Terms />} />
-							<Route element={<NotFound />} />
+							<Route path="" element={<NotFound />} />
 						</Routes>
 					</Suspense>
 					<Suspense fallback="">{state.loggedIn && <Chat />} </Suspense>

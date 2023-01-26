@@ -257,17 +257,18 @@ function HomeGuest() {
 		console.log('i called');
 	}
 	return (
-		<Page title="Home">
+		<Page title="Home" >
 			<Flex
 				direction={{ base: 'column', md: 'row' }}
 				alignItems="center"
 				gap="10"
 				justifyContent="space-between"
+				minH="80vh"
 			>
 				<Box w={{ base: '100%', md: '60%' }}>
 					{/* <img src="https://img.freepik.com/free-vector/organic-flat-blog-post-illustration-with-people_23-2148955260.jpg?w=826&t=st=1674022571~exp=1674023171~hmac=c8086da372ea5d48eaec0b8d63e78abbbb73ea6e3c909b20880dd1025bb3a61e" /> */}
 					<Box>
-						<Text fontSize="6xl">Remember Writing ?</Text>
+						<Text color="primary.500" fontSize="6xl">Remember Writing?</Text>
 					</Box>
 					<Box>
 						<Text fontSize="xl">
