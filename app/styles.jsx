@@ -8,9 +8,10 @@ export const muted = {
 };
 
 export const cardHeading = {
-	fontSize: '1.5rem',
-	color: 'blackAlpha.800',
+	fontSize: '1.2rem',
+	color: 'blackAlpha.700',
 	lineHeight: '1',
+	fontWeight:"500",
 };
 
 export const postHeading = {

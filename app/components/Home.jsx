@@ -17,6 +17,7 @@ import {
 	Text,
 	CardBody,
 	Divider,
+	Link as ChakraLink
 } from '@chakra-ui/react';
 
 import { heading, muted, cardHeading } from '../styles.jsx';
@@ -55,7 +56,7 @@ function Home() {
 				<Stack gap={4} paddingX="10%">
 					<Text sx={heading} textAlign="center" fontWeight="regular">
 						Hello <Text as="strong">{appState.user.username}</Text>, your feed
-						is empty.
+						is empty. You can follow the <ChakraLink as={Link} to="/profile/pranav" color='primary.500'>@admin</ChakraLink> of the app.
 					</Text>
 					<Text textAlign="center" fontSize="xl">
 						Your feed displays the latest posts from the people you follow. If
@@ -69,7 +70,7 @@ function Home() {
 				<>
 					<Text sx={heading} textAlign="center" fontWeight="regular">
 						Hello{' '}
-						<Text as="strong" color="primary.500">
+						<Text as="strong" color="primary.600">
 							{appState.user.username}
 						</Text>
 						, The Latest From Those You Follow
@@ -114,7 +115,7 @@ function Home() {
 													</Box>
 												</Flex>
 												<Box>
-													<Text sx={{ fontSize: '1.5rem' }} color="primary.500">
+													<Text sx={{ fontSize: '1.5rem' }} color="primary.600">
 														{item.title}
 													</Text>
 												</Box>

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import DispatchContext from '../DispatchContext.jsx';
 import StateContext from '../StateContext.jsx';
 
@@ -11,12 +11,14 @@ import { MdHome } from "react-icons/md";
 function HeaderLoggedIn(props) {
 	const appDispatch = useContext(DispatchContext);
 	const appState = useContext(StateContext);
+	const navigate = useNavigate();
 	function handleClick() {
 		appDispatch({ type: 'logout' });
 		appDispatch({
 			type: 'flashMessages',
 			value: 'You have successfully logged out.',
 		});
+		navigate(to="/");
 	}
 	function handleSearchIcon(e) {
 		e.preventDefault();

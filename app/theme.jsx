@@ -14,7 +14,8 @@ const IconButtonTheme = defineStyleConfig({
 
 const theme = extendTheme(
 	{
-		fonts: {
+		fontColor: {
+			p:"red"
 			// body: 'Nunito, sans-serif',
 			// heading: 'Nunito, sans-serif',
 		},
@@ -25,6 +26,22 @@ const theme = extendTheme(
 			global: {
 				body: {
 					bg: 'blackAlpha.50',
+					
+				},
+				p:{
+					color:"blackAlpha.800"
+				},
+				h1:{
+					color:"blackAlpha.800"
+				},
+				h2:{
+					color:"blackAlpha.800"
+				},
+				h3:{
+					color:"blackAlpha.800"
+				},
+				h4:{
+					color:"blackAlpha.800"
 				},
 			},
 		},

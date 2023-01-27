@@ -15,7 +15,7 @@ function Header(props) {
 	const appState = useContext(StateContext);
 
 	return (
-		<Box bg="white" paddingX={{base:"5%",sm:"10%"}} position={'sticky'} top='0' zIndex={'10'}>
+		<Box bg="white" paddingX={{base:"5%",sm:"10%"}} position={'sticky'} top='0' zIndex={'10'} shadow={'sm'}>
 			<Box
 				display={{ md: 'flex' }}
 				justifyContent="space-between"
@@ -23,7 +23,7 @@ function Header(props) {
 				// sx={outlineBox}
 			>
 				<Link to="/">
-					<Text paddingLeft="2" fontSize="xl"  color="#007bff">
+					<Text paddingLeft="2" fontSize="xl"  color="primary.600">
 						Blogger App
 					</Text>
 				</Link>

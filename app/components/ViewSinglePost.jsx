@@ -28,6 +28,10 @@ import {
 	Button,
 	AlertDialogContent,
 	Card,
+	Skeleton,
+	SkeletonCircle,
+	SkeletonText,
+	CardBody,
 } from '@chakra-ui/react';
 
 import { muted, outlineBox, postHeading } from '../styles.jsx';
@@ -109,9 +113,18 @@ function ViewSinglePost(props) {
 	}
 	if (isLoading)
 		return (
-			<div>
-				<LoadingDotIcon />
-			</div>
+			<Page width="20%">
+				<Card>
+					<CardBody>
+						<Stack gap={4}>
+							<Skeleton fadeDuration={1} h={'50px'} />
+							<SkeletonCircle h={'50px'} w="50px"/>
+							<Skeleton fadeDuration={1} h={'400px'} />
+							<SkeletonText skeletonHeight={3} />
+						</Stack>
+					</CardBody>
+				</Card>
+			</Page>
 		);
 	return (
 		<Page title={post.title} width="20%">
@@ -188,9 +201,9 @@ function ViewSinglePost(props) {
 						sx={{
 							img: {
 								width: '100%',
-								borderRadius:"16px",
-								marginBottom:"10px",
-								marginTop:"10px",
+								borderRadius: '16px',
+								marginBottom: '10px',
+								marginTop: '10px',
 							},
 						}}
 						ref={cancelRef}

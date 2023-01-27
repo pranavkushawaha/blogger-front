@@ -13,7 +13,7 @@ function Page(props) {
 			paddingY="50px"
 			paddingX={{ base: '5%', xl: props.width ? props.width : '10%' }}
 			// backgroundColor="red"
-      sx={props.style}
+			sx={props.style}
 		>
 			{/* <Card> */}
 

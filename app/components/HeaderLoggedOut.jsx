@@ -31,46 +31,52 @@ function HeaderLoggedOut(props) {
 		} catch (e) {}
 	}
 	return (
-		<Box display={{ md: 'flex' }} alignItems="center" justifyContent="center">
-			<Box m={3}>
-				<Input
-					size="sm"
-					variant="filled"
-					onChange={(e) => setUsername(e.target.value)}
-					name="username"
-					type="text"
-					placeholder="Username"
-					autoComplete="off"
-					// minW={"200px"}
+		<form action="" onSubmit={handleSubmit}>
+			<Box
+				display={{ md: 'flex' }}
+				alignItems="center"
+				justifyContent="space-around"
+			>
+				<Box p={2}>
+					<Input
+						size="sm"
+						variant="filled"
+						onChange={(e) => setUsername(e.target.value)}
+						name="username"
+						type="text"
+						placeholder="Username"
+						autoComplete="off"
+						// minW={"200px"}
 
-					// width="auto"
-					_focus={{
-						bg: 'gray.200',
-					}}
-				/>
-			</Box>
-			<Box m={3}>
-				<Input
-					size="sm"
-					variant="filled"
-					onChange={(e) => setPassword(e.target.value)}
-					name="password"
-					type="password"
-					placeholder="Password"
-					// minW={"200px"}
+						// width="auto"
+						_focus={{
+							bg: 'gray.200',
+						}}
+					/>
+				</Box>
+				<Box p={2}>
+					<Input
+						size="sm"
+						variant="filled"
+						onChange={(e) => setPassword(e.target.value)}
+						name="password"
+						type="password"
+						placeholder="Password"
+						// minW={"200px"}
 
-					// width="auto"
-					_focus={{
-						bg: 'gray.200',
-					}}
-				/>
+						// width="auto"
+						_focus={{
+							bg: 'gray.200',
+						}}
+					/>
+				</Box>
+				<Box p={2}>
+					<Button size="sm" type="submit">
+						Sign In
+					</Button>
+				</Box>
 			</Box>
-			<Box m={3}>
-				<Button size="sm" onClick={handleSubmit}>
-					Sign In
-				</Button>
-			</Box>
-		</Box>
+		</form>
 	);
 }
 

@@ -75,7 +75,7 @@ function ProfilePosts() {
 									<CardHeader>
 										{/* <Flex spacing="4"> */}
 										<Box>
-											<Text sx={{ fontSize: '1.5rem' }} color="primary.500">
+											<Text sx={{ fontSize: '1.5rem' }} color="primary.600">
 												{item.title}
 											</Text>
 										</Box>

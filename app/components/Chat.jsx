@@ -25,6 +25,7 @@ import {
 	IconButton,
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
+import { IoIosSend } from 'react-icons/io';
 
 function Chat() {
 	const socket = useRef(null);
@@ -65,8 +66,9 @@ function Chat() {
 	}, []);
 
 	useEffect(() => {
-		let vh = window?.innerHeight*(0.5);
-		if(chatLog.current?.clientHeight>vh)chatLog.current?.lastElementChild?.scrollIntoView();
+		let vh = window?.innerHeight * 0.5;
+		if (chatLog.current?.clientHeight > vh)
+			chatLog.current?.lastElementChild?.scrollIntoView();
 		if (state.chatMessages.length && !appState.isChatOpen) {
 			appDispatch({ type: 'incrementUnreadChatCount' });
 		}
@@ -98,11 +100,11 @@ function Chat() {
 			size={'xs'}
 		>
 			<ModalOverlay />
-			<ModalContent>				
+			<ModalContent>
 				<Center py={4}>
-					<Badge colorScheme='primary'>Your messages will show up here.</Badge>
+					<Badge colorScheme="primary">Your messages will show up here.</Badge>
 				</Center>
-				<ModalCloseButton/>
+				<ModalCloseButton />
 				<Box
 					id="chat"
 					ref={chatLog}
@@ -179,8 +181,9 @@ function Chat() {
 
 				{/* </DrawerBody> */}
 				{/* <ModalFooter> */}
-					<Box p={5}>
-						<form onSubmit={handleSubmit} id="chatForm">
+				<Box p={5}>
+					<form onSubmit={handleSubmit} id="chatForm">
+						<Flex gap={2}>
 							<Input
 								ref={chatField}
 								onChange={handleFieldChange}
@@ -191,9 +194,14 @@ function Chat() {
 								autoComplete="off"
 								autoFocus
 								w="100%"
+								size="sm"
 							/>
-						</form>
-					</Box>
+							<Box>
+								<IconButton size="sm" variant="outline" icon={<IoIosSend size={'20'}/>} />
+							</Box>
+						</Flex>
+					</form>
+				</Box>
 				{/* </ModalFooter> */}
 			</ModalContent>
 		</Modal>
