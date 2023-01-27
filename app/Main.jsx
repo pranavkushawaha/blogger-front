@@ -160,7 +160,7 @@ function ExampleComponent() {
 					</Suspense>
 					<Suspense fallback="">{state.loggedIn && <Chat />} </Suspense>
 					<Footer />
-					{state.loggedIn && <FAB/>}
+					{state.loggedIn && !state.isChatOpen && <FAB/>}
 				</BrowserRouter>
 			</DispatchContext.Provider>
 		</StateContext.Provider>

@@ -31,7 +31,7 @@ function HeaderLoggedIn(props) {
 			p="2"
 			// direction={{ base: 'column', sm: 'row' }}
 			flexWrap={'wrap'}
-			gap="4"
+			gap={{base:"2",sm:"4"}}
 			alignItems={'center'}
 			justifyContent="flex-start"
 			// overflow={'hidden'}

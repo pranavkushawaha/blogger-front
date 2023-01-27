@@ -41,6 +41,10 @@ function Chat() {
 	useEffect(() => {
 		if (appState.isChatOpen) {
 			appDispatch({ type: 'clearUnreadChatCount' });
+			const timer = setTimeout(()=>{
+				chatLog.current?.lastElementChild?.scrollIntoView({behavior: "smooth",block:"start"});
+			},1000);
+			// console.log("mounted")
 		}
 	}, [appState.isChatOpen]);
 
@@ -67,8 +71,8 @@ function Chat() {
 
 	useEffect(() => {
 		let vh = window?.innerHeight * 0.5;
-		if (chatLog.current?.clientHeight > vh)
-			chatLog.current?.lastElementChild?.scrollIntoView();
+		// if (chatLog.current?.clientHeight > vh)
+			chatLog.current?.lastElementChild?.scrollIntoView({behavior: "smooth",block:"end"});
 		if (state.chatMessages.length && !appState.isChatOpen) {
 			appDispatch({ type: 'incrementUnreadChatCount' });
 		}
@@ -98,6 +102,7 @@ function Chat() {
 			placement="right"
 			onClose={() => appDispatch({ type: 'toggleChat' })}
 			size={'xs'}
+			blockScrollOnMount='true'
 		>
 			<ModalOverlay />
 			<ModalContent>
@@ -197,7 +202,7 @@ function Chat() {
 								size="sm"
 							/>
 							<Box>
-								<IconButton size="sm" variant="outline" icon={<IoIosSend size={'20'}/>} />
+								<IconButton type="submit" size="sm" variant="outline" icon={<IoIosSend size={'20'}/>} />
 							</Box>
 						</Flex>
 					</form>
