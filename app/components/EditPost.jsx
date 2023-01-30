@@ -25,7 +25,8 @@ import {
 	Card,
 	CardBody,
 	CardHeader,
-
+	Skeleton,
+	SkeletonText,
 } from '@chakra-ui/react';
 
 function EditPost(props) {
@@ -153,9 +154,17 @@ function EditPost(props) {
 	}
 	if (state.isFetching)
 		return (
-			<div>
-				<LoadingDotIcon />
-			</div>
+			<Page width="20%">
+				<Card>
+					<CardBody>
+						<Stack gap={4}>
+							<Skeleton fadeDuration={1} h={'50px'} />
+							<Skeleton fadeDuration={1} h={'400px'} />
+							<SkeletonText skeletonHeight={3} />
+						</Stack>
+					</CardBody>
+				</Card>
+			</Page>
 		);
 	return (
 		<Page title="Edit Post" width="20%">
@@ -223,7 +232,7 @@ function EditPost(props) {
 					>
 						<Button
 							onClick={handleSubmit}
-							disabled={state.isSaving}
+							isLoading={state.isSaving}
 							colorScheme="whatsapp"
 						>
 							Save Update

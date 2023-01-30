@@ -7,8 +7,11 @@ function HeaderLoggedOut(props) {
 	const appDispatch = useContext(DispatchContext);
 	const [username, setUsername] = useState();
 	const [password, setPassword] = useState();
+	const [isLoading, setIsloading] = useState(false);
 	async function handleSubmit(e) {
 		e.preventDefault();
+		if(username=="" || password=="")return ;
+		setIsloading(true);
 		try {
 			const response = await Axios.post('/login', {
 				username,
@@ -29,6 +32,7 @@ function HeaderLoggedOut(props) {
 				});
 			}
 		} catch (e) {}
+		setIsloading(false);
 	}
 	return (
 		<form action="" onSubmit={handleSubmit}>
@@ -71,7 +75,7 @@ function HeaderLoggedOut(props) {
 					/>
 				</Box>
 				<Box p={2}>
-					<Button size="sm" type="submit">
+					<Button isLoading={isLoading}loadingText='Signing' size="sm" type="submit">
 						Sign In
 					</Button>
 				</Box>

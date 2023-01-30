@@ -18,7 +18,7 @@ function HeaderLoggedIn(props) {
 			type: 'flashMessages',
 			value: 'You have successfully logged out.',
 		});
-		navigate(to="/");
+		navigate("/");
 	}
 	function handleSearchIcon(e) {
 		e.preventDefault();

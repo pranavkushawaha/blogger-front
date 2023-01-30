@@ -41,9 +41,12 @@ function Chat() {
 	useEffect(() => {
 		if (appState.isChatOpen) {
 			appDispatch({ type: 'clearUnreadChatCount' });
-			const timer = setTimeout(()=>{
-				chatLog.current?.lastElementChild?.scrollIntoView({behavior: "smooth",block:"start"});
-			},1000);
+			const timer = setTimeout(() => {
+				chatLog.current?.lastElementChild?.scrollIntoView({
+					behavior: 'smooth',
+					block: 'start',
+				});
+			}, 1000);
 			// console.log("mounted")
 		}
 	}, [appState.isChatOpen]);
@@ -54,9 +57,9 @@ function Chat() {
 			draft.fieldValue = value;
 		});
 	}
-
+	// const cleanup = ;
 	useEffect(() => {
-		socket.current = io(process.env.BACKENDURL);
+		socket.current = io(process.env.BACKENDURL, { closeOnBeforeunload: false });
 		socket.current.on('connect', () => {
 			// console.log("connected for chat");
 		});
@@ -66,13 +69,44 @@ function Chat() {
 				draft.chatMessages.push(message);
 			});
 		});
-		return () => socket.current.disconnect();
+		socket.current.emit('chatFromBrowser', {
+			message: `${appState.user.username} is Online`,
+			token: appState.user.token,
+		});
+		
+
+		window.addEventListener('beforeunload', (e) => {
+			console.log('are y suur');
+			e.preventDefault();
+			e.returnValue = 'Are you suuur?';
+			return true;
+			// e.returnValue=true;
+		});
+		window.addEventListener('unload', () => {
+			console.log('clean up called');
+			socket.current.emit('chatFromBrowser', {
+				message: `${appState.user.username} is Offline`,
+				token: appState.user.token,
+			});
+			socket.current.disconnect();
+		});
+
+		return () => {
+			socket.current.emit('chatFromBrowser', {
+				message: `${appState.user.username} is Offline`,
+				token: appState.user.token,
+			});
+			socket.current.disconnect();
+		};
 	}, []);
 
 	useEffect(() => {
-		let vh = window?.innerHeight * 0.5;
+		// let vh = window?.innerHeight * 0.5;
 		// if (chatLog.current?.clientHeight > vh)
-			chatLog.current?.lastElementChild?.scrollIntoView({behavior: "smooth",block:"end"});
+		chatLog.current?.lastElementChild?.scrollIntoView({
+			behavior: 'smooth',
+			block: 'end',
+		});
 		if (state.chatMessages.length && !appState.isChatOpen) {
 			appDispatch({ type: 'incrementUnreadChatCount' });
 		}
@@ -102,7 +136,7 @@ function Chat() {
 			placement="right"
 			onClose={() => appDispatch({ type: 'toggleChat' })}
 			size={'xs'}
-			blockScrollOnMount='true'
+			blockScrollOnMount="true"
 		>
 			<ModalOverlay />
 			<ModalContent>
@@ -202,7 +236,12 @@ function Chat() {
 								size="sm"
 							/>
 							<Box>
-								<IconButton type="submit" size="sm" variant="outline" icon={<IoIosSend size={'20'}/>} />
+								<IconButton
+									type="submit"
+									size="sm"
+									variant="outline"
+									icon={<IoIosSend size={'20'} />}
+								/>
 							</Box>
 						</Flex>
 					</form>

@@ -49,6 +49,8 @@ function HomeGuest() {
 		submitCount: 0,
 	};
 
+	const [isLoading, setIsloading] = useState(false);
+
 	function ourReducer(draft, action) {
 		switch (action.type) {
 			case 'usernameImmediately':
@@ -210,6 +212,7 @@ function HomeGuest() {
 			// send axios request here
 			const ourRequest = Axios.CancelToken.source();
 			async function fetchResult(params) {
+				setIsloading(true);
 				try {
 					console.log('fetching');
 
@@ -222,6 +225,7 @@ function HomeGuest() {
 						},
 						{ CancelToken: ourRequest.token }
 					);
+					setIsloading(false);
 					appDispatch({ type: 'login', data: response.data });
 					appDispatch({
 						type: 'flashMessages',
@@ -229,6 +233,7 @@ function HomeGuest() {
 					});
 				} catch (e) {
 					console.log('there was a problem or request was cancelled.');
+					setIsloading(false);
 				}
 			}
 			fetchResult();
@@ -239,6 +244,7 @@ function HomeGuest() {
 	}, [state.submitCount]);
 	function handleSubmit(e) {
 		e.preventDefault();
+		
 		dispatch({ type: 'usernameImmedaitely', value: state.username.value });
 		dispatch({
 			type: 'usernameAfterDelay',
@@ -255,9 +261,10 @@ function HomeGuest() {
 		dispatch({ type: 'passwordAfterDelay', value: state.password.value });
 		dispatch({ type: 'submit' });
 		console.log('i called');
+		
 	}
 	return (
-		<Page title="Home" style={{bg:"white"}}>
+		<Page title="Home" style={{ bg: 'white' }}>
 			<Flex
 				direction={{ base: 'column', md: 'row' }}
 				alignItems="center"
@@ -268,7 +275,9 @@ function HomeGuest() {
 				<Box w={{ base: '100%', md: '60%' }}>
 					<img src="https://img.freepik.com/free-vector/organic-flat-blog-post-illustration-with-people_23-2148955260.jpg?w=826&t=st=1674022571~exp=1674023171~hmac=c8086da372ea5d48eaec0b8d63e78abbbb73ea6e3c909b20880dd1025bb3a61e" />
 					<Box>
-						<Text color="primary.500" fontSize="6xl">Remember Writing?</Text>
+						<Text color="primary.500" fontSize="6xl">
+							Remember Writing?
+						</Text>
 					</Box>
 					<Box>
 						<Text fontSize="xl">
@@ -281,88 +290,100 @@ function HomeGuest() {
 				</Box>
 				<Spacer />
 				<Box w={{ base: '100%', md: '40%' }}>
-					<Stack gap="2">
-						<Box>
-							{/* username */}
-							<FormControl isInvalid={state.username.hasError}>
-								<FormLabel>Username</FormLabel>
-								<Input
-									id="username-register"
-									name="username"
-									placeholder="Pick a username"
-									autoComplete="off"
-									onChange={(e) =>
-										dispatch({
-											type: 'usernameImmediately',
-											value: e.target.value,
-										})
-									}
-									borderColor="gray.300"
-								/>
-								{!state.username.hasError ? (
-									<FormHelperText>
-										Enter a unique username of your choice.
-									</FormHelperText>
-								) : (
-									<FormErrorMessage>{state.username.message}</FormErrorMessage>
-								)}
-							</FormControl>
-						</Box>
-						<Box>
-							{/* email */}
-							<FormControl isInvalid={state.email.hasError}>
-								<FormLabel>Email</FormLabel>
-								<Input
-									onChange={(e) =>
-										dispatch({
-											type: 'emailImmediately',
-											value: e.target.value,
-										})
-									}
-									id="email-register"
-									name="email"
-									type="email"
-									placeholder="you@example.com"
-									autoComplete="off"
-									borderColor="gray.300"
-								/>
-								{!state.email.hasError ? (
-									<FormHelperText>
-										Enter the email you'd like to receive the newsletter on.
-									</FormHelperText>
-								) : (
-									<FormErrorMessage>{state.email.message}</FormErrorMessage>
-								)}
-							</FormControl>
-						</Box>
-						<Box>
-							{/* password */}
-							<FormControl isInvalid={state.password.hasError}>
-								<FormLabel>Password</FormLabel>
-								<Input
-									onChange={(e) =>
-										dispatch({
-											type: 'passwordImmediately',
-											value: e.target.value,
-										})
-									}
-									id="password-register"
-									name="password"
-									type="password"
-									placeholder="Create a password"
-									borderColor="gray.300"
-								/>
-								{!state.password.hasError ? (
-									<FormHelperText>Enter the 12 letter password.</FormHelperText>
-								) : (
-									<FormErrorMessage>{state.password.message}</FormErrorMessage>
-								)}
-							</FormControl>
-						</Box>
-						<Button type="submit" onClick={handleSubmit}>
-							Sign Up for Blogger App
-						</Button>
-					</Stack>
+					<form action="" onSubmit={handleSubmit}>
+						<Stack gap="2">
+							<Box>
+								{/* username */}
+								<FormControl isInvalid={state.username.hasError}>
+									<FormLabel>Username</FormLabel>
+									<Input
+										id="username-register"
+										name="username"
+										placeholder="Pick a username"
+										autoComplete="off"
+										onChange={(e) =>
+											dispatch({
+												type: 'usernameImmediately',
+												value: e.target.value,
+											})
+										}
+										borderColor="gray.300"
+									/>
+									{!state.username.hasError ? (
+										<FormHelperText>
+											Enter a unique username of your choice.
+										</FormHelperText>
+									) : (
+										<FormErrorMessage>
+											{state.username.message}
+										</FormErrorMessage>
+									)}
+								</FormControl>
+							</Box>
+							<Box>
+								{/* email */}
+								<FormControl isInvalid={state.email.hasError}>
+									<FormLabel>Email</FormLabel>
+									<Input
+										onChange={(e) =>
+											dispatch({
+												type: 'emailImmediately',
+												value: e.target.value,
+											})
+										}
+										id="email-register"
+										name="email"
+										type="email"
+										placeholder="you@example.com"
+										autoComplete="off"
+										borderColor="gray.300"
+									/>
+									{!state.email.hasError ? (
+										<FormHelperText>
+											Enter the email you'd like to receive the newsletter on.
+										</FormHelperText>
+									) : (
+										<FormErrorMessage>{state.email.message}</FormErrorMessage>
+									)}
+								</FormControl>
+							</Box>
+							<Box>
+								{/* password */}
+								<FormControl isInvalid={state.password.hasError}>
+									<FormLabel>Password</FormLabel>
+									<Input
+										onChange={(e) =>
+											dispatch({
+												type: 'passwordImmediately',
+												value: e.target.value,
+											})
+										}
+										id="password-register"
+										name="password"
+										type="password"
+										placeholder="Create a password"
+										borderColor="gray.300"
+									/>
+									{!state.password.hasError ? (
+										<FormHelperText>
+											Enter the 12 letter password.
+										</FormHelperText>
+									) : (
+										<FormErrorMessage>
+											{state.password.message}
+										</FormErrorMessage>
+									)}
+								</FormControl>
+							</Box>
+							<Button
+								isLoading={isLoading}
+								loadingText="Submitting"
+								type="submit"
+							>
+								Sign Up for Blogger App
+							</Button>
+						</Stack>
+					</form>
 				</Box>
 			</Flex>
 		</Page>

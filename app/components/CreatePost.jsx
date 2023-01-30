@@ -21,11 +21,13 @@ import {
 function CreatePost(props) {
 	const [title, setTitle] = useState();
 	const [body, setBody] = useState();
+	const [isLoading, setIsloading] = useState(false);
 	const appDispatch = useContext(DispatchContext);
 	const appState = useContext(StateContext);
 	const navigate = useNavigate();
 	async function handleSubmit(e) {
 		e.preventDefault();
+		setIsloading(true);
 		try {
 			const response = await Axios.post('/create-post', {
 				title,
@@ -37,9 +39,11 @@ function CreatePost(props) {
 				type: 'flashMessages',
 				value: 'Congrats, you created a new post.',
 			});
+			setIsloading(false);
 			navigate(`/post/${response.data}`);
 		} catch (error) {
 			console.log(error);
+			setIsloading(false);
 		}
 	}
 	return (
@@ -76,7 +80,7 @@ function CreatePost(props) {
 						/>
 					</FormControl>
 
-					<Button mt={4} onClick={handleSubmit} colorScheme="whatsapp">
+					<Button mt={4} isLoading={isLoading}  onClick={handleSubmit} colorScheme="whatsapp">
 						Save New Post
 					</Button>
 				</CardBody>

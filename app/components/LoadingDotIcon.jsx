@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 function LoadingDotIcon() {
 	return (
 		<Center h={'50vh'}>
-			<Spinner size="xl" />
+			<Spinner color='primary.600' size="xl" />
 		</Center>
 	);
 }
