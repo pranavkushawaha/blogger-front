@@ -5,14 +5,18 @@ import { Flex, Button, Input, Box } from '@chakra-ui/react';
 
 function HeaderLoggedOut(props) {
 	const appDispatch = useContext(DispatchContext);
-	const [username, setUsername] = useState();
-	const [password, setPassword] = useState();
+	const [username, setUsername] = useState("root");
+	const [password, setPassword] = useState("123456781111");
 	const [isLoading, setIsloading] = useState(false);
 	async function handleSubmit(e) {
 		e.preventDefault();
 		if(username=="" || password=="")return ;
 		setIsloading(true);
 		try {
+			appDispatch({
+				type: 'flashMessages',
+				value: 'Sometimes, it takes about a min in first API call to backend to startup. Thanks for being patient.',
+			});
 			const response = await Axios.post('/login', {
 				username,
 				password,
@@ -51,7 +55,7 @@ function HeaderLoggedOut(props) {
 						placeholder="Username"
 						autoComplete="off"
 						// minW={"200px"}
-
+						value={username}
 						// width="auto"
 						_focus={{
 							bg: 'gray.200',
@@ -67,7 +71,7 @@ function HeaderLoggedOut(props) {
 						type="password"
 						placeholder="Password"
 						// minW={"200px"}
-
+						value={password}
 						// width="auto"
 						_focus={{
 							bg: 'gray.200',

@@ -13,7 +13,7 @@ export function useToastHook() {
         title: 'Notification',
         description: message,
         status: status,
-        duration: 5000,
+        duration: 9000,
         position: "top",
         isClosable: true,
       });

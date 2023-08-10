@@ -76,9 +76,9 @@ function Chat() {
 		
 
 		window.addEventListener('beforeunload', (e) => {
-			console.log('are y suur');
+			// console.log('are y suur');
 			e.preventDefault();
-			e.returnValue = 'Are you suuur?';
+			// e.returnValue = 'Are you suuur?';
 			return true;
 			// e.returnValue=true;
 		});
@@ -141,7 +141,7 @@ function Chat() {
 			<ModalOverlay />
 			<ModalContent>
 				<Center py={4}>
-					<Badge colorScheme="primary">Your messages will show up here.</Badge>
+					<Badge colorScheme="primary">Your Chats (Socket.io)</Badge>
 				</Center>
 				<ModalCloseButton />
 				<Box

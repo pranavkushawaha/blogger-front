@@ -128,7 +128,7 @@ function Search() {
 								type="text"
 								autoComplete="off"
 								id="live-search-field"
-								placeholder="What are you interested in?"
+								placeholder="For eg. you can search for Taj Mahal..."
 							/>
 						</InputGroup>
 					</Box>
